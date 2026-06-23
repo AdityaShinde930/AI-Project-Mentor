@@ -13,7 +13,7 @@ duration = input("Enter Duration: ")
 
 print("\nGenerating Project Ideas...\n")
 
-ideas = generate_project_ideas(domain, difficulty, duration)
+ideas = generate_project_ideas(domain, difficulty, duration) #fn call
 
 print("\n" + "=" * 60)
 print("🚀 RECOMMENDED PROJECTS")
@@ -23,7 +23,6 @@ print("=" * 60)
 for line in ideas.split("\n"): 
     parts = line.split("|")
     if len(parts) == 3:
-
         number = parts[0].strip() # removes extra space
         name = parts[1].strip()
         desc = parts[2].strip()
@@ -56,7 +55,7 @@ if not project_name:
 
 print("\nGenerating Blueprint...\n")
 
-details = generate_project_details(project_name)
+details = generate_project_details(project_name,duration)
 
 print("=" * 60)
 print("🚀 PROJECT BLUEPRINT")

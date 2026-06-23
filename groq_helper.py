@@ -1,10 +1,10 @@
-from groq import Groq
-from dotenv import load_dotenv
-import os
+from groq import Groq #imports groq api lib
+from dotenv import load_dotenv #to read .env
+import os #to Access env variable
 load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY")) #using api key groq creates connection
 
-def generate_project_ideas(domain, difficulty, duration):
+def generate_project_ideas(domain, difficulty, duration): #passes
     prompt = f"""
     Generate exactly 3 software project ideas.
     Domain: {domain}
@@ -21,13 +21,15 @@ def generate_project_ideas(domain, difficulty, duration):
         model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}] #prompt to ai
     )
-    return response.choices[0].message.content #returns text generated ai
+    return response.choices[0].message.content #returns output/text generated ai
 
-def generate_project_details(project_name): # pass proj name
-
+def generate_project_details(project_name, duration): # pass proj name
     prompt = f"""
     You are an expert software architect.
+
     Project Name: {project_name}
+    Duration: {duration}
+
     Generate:
     1. Project Overview
     2. Problem Statement
@@ -37,6 +39,13 @@ def generate_project_details(project_name): # pass proj name
     6. Development Roadmap
     7. How To Start
     8. Common Challenges
+
+    For the Development Roadmap:
+    - Generate the roadmap according to the given duration.
+    - Do NOT mention weeks or months.
+    - Do NOT write things like "2 weeks", "4 weeks", etc.
+    - Use only Phase 1, Phase 2, Phase 3, and Phase 4.
+    - Keep the roadmap realistic and achievable within the specified duration.
 
     Use this exact format:
     🚀 PROJECT OVERVIEW
@@ -49,7 +58,7 @@ def generate_project_details(project_name): # pass proj name
 
     ⚠ COMMON CHALLENGES
     Keep the response concise and professional.
-        """
+    """
 
     response = client.chat.completions.create( # sends request to groq model
         model="llama-3.3-70b-versatile",
